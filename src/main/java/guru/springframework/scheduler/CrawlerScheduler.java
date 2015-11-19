@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public class CrawlerScheduler {
 
     @Autowired
-    private Crawler gerritCrawler;
+    private Crawler crawler;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 50000)
     public void reportCurrentTime() {
-        gerritCrawler.updateKnowledgeBase();
+        crawler.updateKnowledgeBase();
     }
 }

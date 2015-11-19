@@ -2,14 +2,12 @@ package guru.springframework.crawler;
 
 import guru.springframework.domain.Project;
 import guru.springframework.repositories.ProjectRepository;
-import guru.springframework.services.ProductService;
+import guru.springframework.repositories.ReviewRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by xinghuangxu on 11/18/15.
@@ -24,9 +22,17 @@ public class Crawler {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public void updateKnowledgeBase(){
+    @Autowired
+    private GerritCrawler gerritCrawler;
+
+    public void updateKnowledgeBase() {
         log.info("Crawler is starting to crawl.");
         Iterable<Project> projects = projectRepository.findAll();
-        
+        for (Project project : projects) {
+            if (project.getType() == Project.Type.Gerrit) {
+                gerritCrawler.crawl(project);
+                log.info(project.getName());
+            }
+        }
     }
 }
