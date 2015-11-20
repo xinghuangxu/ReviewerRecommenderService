@@ -18,6 +18,8 @@ package guru.springframework.recommender.xfinder; /*
  */
 
 
+ import guru.springframework.domain.Reviewer;
+
  import java.util.ArrayList;
 import java.util.Date;
 /*
@@ -29,12 +31,12 @@ public class ReviewTupleList
     //MEMBER VARIABLES
     //ArrayList<Integer> mBugIDList;
     ArrayList<String> mBugIDList;
-    ArrayList<String> mReviewerList;
+    ArrayList<Reviewer> mReviewerList;
     ArrayList<Date> mDateList;
 
     //CONSTRUCTORS
     //public ReviewTupleList(ArrayList<Integer> bugidList, ArrayList<String> reviewerList, ArrayList<Date> dateList)
-    public ReviewTupleList(ArrayList<String> bugidList, ArrayList<String> reviewerList, ArrayList<Date> dateList)
+    public ReviewTupleList(ArrayList<String> bugidList, ArrayList<Reviewer> reviewerList, ArrayList<Date> dateList)
     {
         mBugIDList = bugidList;
         mReviewerList=reviewerList;

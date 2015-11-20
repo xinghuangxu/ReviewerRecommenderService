@@ -18,7 +18,9 @@ package guru.springframework.recommender.xfinder; /*
  */
 
 
- /*
+import guru.springframework.domain.Reviewer;
+
+/*
   * @author: Sara Bahrami <mxbahramizanjani@wichita.edu>
   * Date Created: 11/2013
   *
@@ -26,33 +28,45 @@ package guru.springframework.recommender.xfinder; /*
   * 	Allows the storage of authors/attachers and their xfactor together
   * so that they can be sorted based on xfactor.
   */
- public class Developer implements Comparable<Developer>
- {
-     //MEMBER VARIABLES
-     String mName;
-     Double mXfactor;
+public class RecommendedReviewer implements Comparable<RecommendedReviewer> {
+    //MEMBER VARIABLES
+    private Reviewer reviewer;
+    private Double score;
 
-     //CONSTRUCTORS
-     public Developer(String name)
-     {
-         mName = name;
-     }
-     public Developer(String name, Double xfactor)
-     {
-         mName = name;
-         mXfactor = xfactor;
-     }
+    public RecommendedReviewer(Reviewer reviewer, Double xfactor) {
+        this.reviewer = reviewer;
+        score = xfactor;
+    }
 
-     //INHERITED METHODS
-     public int compareTo(Developer arg)
-     {
-         //this is backward in order to use Collections.sort and get descending order
-         if (this.mXfactor > arg.mXfactor)
-             return -1;
-         else if (this.mXfactor < arg.mXfactor)
-             return 1;
-         else
-             return 0;
-     }
+    public String getName() {
+        return reviewer.getName();
+    }
 
- }
+    public String getEmail() {
+        return reviewer.getEmail();
+    }
+
+    public String getUsername() {
+        return reviewer.getUsername();
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void addXFactor(int value) {
+        score += value;
+    }
+
+    //INHERITED METHODS
+    public int compareTo(RecommendedReviewer arg) {
+        //this is backward in order to use Collections.sort and get descending order
+        if (this.score > arg.score)
+            return -1;
+        else if (this.score < arg.score)
+            return 1;
+        else
+            return 0;
+    }
+
+}

@@ -18,8 +18,8 @@ package guru.springframework.recommender.xfinder;
  
  */
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import guru.springframework.domain.Reviewer;
+
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.*;
@@ -38,8 +38,7 @@ import java.util.concurrent.TimeUnit;
 * xfactors for each reviewer, and then prints out the list of reviewers
 * with their xfactors in descending order based on their xfactor.
 */
-public class XFinder
-{
+public class XFinder {
     //CONSTANTS
     //this needs to be changed to two different directories. Directory which houses the Review Log and Directory which houses
     // the Commit log. If we set the path to directory of Review Log, XFinder calculates the xfactor score based on review history
@@ -54,9 +53,7 @@ public class XFinder
     /*
      * Creates an object which is used to find the xfactor
      */
-    public XFinder(String outputDir)
-    {
-        mOutputDir = outputDir;
+    public XFinder() {
     }
 
 
@@ -68,34 +65,28 @@ public class XFinder
      * all of the information concerning the individual authors who interacted with
      * this path.
      */
-    public List<Object> __formCodeVectorMap (String path, Date CreationDate)
-    {
+    public List<Object> __formCodeVectorMap(String path, Date CreationDate) {
         //Declarations
         HashMap<String, ArrayList<ReviewTuple>> possibleMatchPaths = new HashMap<String, ArrayList<ReviewTuple>>();
         ArrayList<ReviewTuple> infoVectors;
         //ArrayList<Integer> interactionList;
         ArrayList<String> interactionList;
-        ArrayList<String> authorList;
+        ArrayList<Reviewer> authorList;
         ArrayList<Date> dayList;
         ReviewTupleList codeVectorMap;
-        HashMap<String, ReviewTupleList> authorCodeMap;
+        HashMap<Reviewer, ReviewTupleList> authorCodeMap;
 
-        try
-        {
+        try {
 
-            try
-            {
+            try {
                 //search through HashMap of mPathReviewDict<path, info> for the path that matches with the query path and filter all the info tuples
                 // which their date is after the creation date of the input review id.
                 for (Entry<String, ArrayList<ReviewTuple>> entry : mPathReviewDict.entrySet())
-                    if(path.endsWith(entry.getKey()))
-                    {
-                        ArrayList<ReviewTuple> reviews=new ArrayList<ReviewTuple>();
+                    if (path.endsWith(entry.getKey())) {
+                        ArrayList<ReviewTuple> reviews = new ArrayList<ReviewTuple>();
 
-                        for (int k=0;k<entry.getValue().size();k++)
-                        {
-                            if(entry.getValue().get(k).mDate.before(CreationDate))
-                            {
+                        for (int k = 0; k < entry.getValue().size(); k++) {
+                            if (entry.getValue().get(k).mDate.before(CreationDate)) {
                                 reviews.add(entry.getValue().get(k));
 
 
@@ -103,20 +94,14 @@ public class XFinder
                         }
                         possibleMatchPaths.put(entry.getKey(), reviews);
                     }
-            }
-
-
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 System.err.println("Searching for path in mPathReviewDict:: " + e.getMessage());
             }
 
             //create a list of all tuples that match the path
             infoVectors = new ArrayList<ReviewTuple>();
-            for (List<ReviewTuple> eachMatch : possibleMatchPaths.values())
-            {
-                for (ReviewTuple tuple : eachMatch)
-                {
+            for (List<ReviewTuple> eachMatch : possibleMatchPaths.values()) {
+                for (ReviewTuple tuple : eachMatch) {
                     infoVectors.add(tuple);
                 }
             }
@@ -124,10 +109,9 @@ public class XFinder
             //create codeVectorMap - contains all info about this path
             //interactionList = new ArrayList<Integer>(); //list of bugIDs that contain this path
             interactionList = new ArrayList<String>(); //list of bugIDs that contain this path
-            authorList = new ArrayList<String>(); //list of all the attachers of this path
+            authorList = new ArrayList<Reviewer>(); //list of all the attachers of this path
             dayList = new ArrayList<Date>(); //list of dates this path was attached/interacted
-            for (ReviewTuple tuple : infoVectors)
-            {
+            for (ReviewTuple tuple : infoVectors) {
                 interactionList.add(tuple.mBugID);
                 if (!authorList.contains(tuple.mReviewer)) //prevents duplicates
                     authorList.add(tuple.mReviewer);
@@ -137,15 +121,13 @@ public class XFinder
             codeVectorMap = new ReviewTupleList(interactionList, authorList, dayList);
 
             //create authorCodeMap - contains all authors for this path and their associated info
-            authorCodeMap = new HashMap<String, ReviewTupleList>();
-            for (String author : authorList)
-            {
+            authorCodeMap = new HashMap<Reviewer, ReviewTupleList>();
+            for (Reviewer author : authorList) {
                 //interactionList = new ArrayList<Integer>(); //list of bugIDs containing path attached by author
                 interactionList = new ArrayList<String>(); //list of bugIDs containing path attached by author
                 dayList = new ArrayList<Date>(); //list of dates path was attached by author
                 for (ReviewTuple tuple : infoVectors)
-                    if (tuple.mReviewer.equals(author))
-                    {
+                    if (tuple.mReviewer.equals(author)) {
                         interactionList.add(tuple.mBugID);
                         if (!dayList.contains(formatDate(tuple.mDate))) //prevents duplicates
                             dayList.add(formatDate(tuple.mDate));
@@ -154,9 +136,7 @@ public class XFinder
             }
 
             return Arrays.asList(codeVectorMap, authorCodeMap);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println("Main portion of __formCodeVectorMap():: " + e.getMessage());
             return null;
         }
@@ -180,10 +160,9 @@ public class XFinder
      * 		interacted with the file/path and the most recent date that
      * 		anyone interacted with the file/path.
      */
-    public ArrayList<Developer> __computeXfactor (ReviewTupleList codeVectorMap, HashMap<String, ReviewTupleList> authorCodeMap)
-    {
+    public Map<Reviewer, Double> __computeXfactor(ReviewTupleList codeVectorMap, HashMap<Reviewer, ReviewTupleList> authorCodeMap) {
         //Declarations
-        ArrayList<Developer> xfactorMap = new ArrayList<Developer>();
+        Map<Reviewer, Double> xfactorMap = new HashMap<>();
         Integer interactionFactor = 0;
         Integer dayFactor = 0;
         Double mostRecentInteractionFactor = 0.0;
@@ -191,8 +170,7 @@ public class XFinder
         Date totalMostRecent;
         Date authorMostRecent;
 
-        for (Entry<String, ReviewTupleList> entry : authorCodeMap.entrySet())
-        {
+        for (Entry<Reviewer, ReviewTupleList> entry : authorCodeMap.entrySet()) {
             interactionFactor = entry.getValue().mBugIDList.size();
             xfactorScore = (double) interactionFactor / codeVectorMap.mBugIDList.size();
 
@@ -214,9 +192,8 @@ public class XFinder
             else
                 xfactorScore += 1.0;
 
-
-            //add author's xfactor to xfactorMap
-            xfactorMap.add(new Developer(entry.getKey(), xfactorScore));
+            //add author's xfactor to xfactorMap\xfactorMap
+            xfactorMap.put(entry.getKey(), xfactorScore);
 
             //reset factors for next author
             interactionFactor = 0;
@@ -234,59 +211,47 @@ public class XFinder
      * for each level of the path, sorts, and prints them to a file.
      */
 
-    public void run (List<String> queriedPathList, String outputFile, Date creationDate, HashMap<String, ArrayList<ReviewTuple>> mPathReviewDict) throws IOException
-    {
+    public List<RecommendedReviewer> run(List<String> queriedPathList, Date creationDate, HashMap<String, ArrayList<ReviewTuple>> mPathReviewDict) {
         //Declarations
         PrintWriter writer;
         List<Object> infoVectors;
-        ArrayList<Developer> developerRecs;
-
-        //for training based on code review history
-//		Dictionary Dict = new Dictionary(interactionDictXMLDir);
-        //for training based on commit history
-        //DictionaryGitLog Dict = new DictionaryGitLog(interactionDictXMLDir);
+        Map<Reviewer, Double> recommendedReviewerRecs = new HashMap<>();
+        Map<Reviewer, Double> curRecommendedReviewerRecs;
 
         this.mPathReviewDict = mPathReviewDict;
+        StringBuilder sb = new StringBuilder();
 
-        try
-        {
-            writer = new PrintWriter(new FileOutputStream(this.mOutputDir + outputFile, false));
+        //find recommendation for each path from queriedPathList
+        for (String queriedPath : queriedPathList) {
+            sb.append(queriedPath + "\t");
+            try {
+                //form a code-vector and a developer-vector for this path
+                infoVectors = this.__formCodeVectorMap(queriedPath, creationDate);
+                //compute the xfactor the vectors
+                curRecommendedReviewerRecs = this.__computeXfactor((ReviewTupleList) infoVectors.get(0), (HashMap<Reviewer, ReviewTupleList>) infoVectors.get(1));
+                //sort the recommendations by their xfactor score.
 
-            //find recommendation for each path from queriedPathList
-            for (String queriedPath : queriedPathList)
-            {
-                    writer.print(queriedPath + "\t");
-                    try
-                    {
-                        //form a code-vector and a developer-vector for this path
-                        infoVectors = this.__formCodeVectorMap(queriedPath,creationDate);
-                        //compute the xfactor the vectors
-                        developerRecs = this.__computeXfactor((ReviewTupleList) infoVectors.get(0), (HashMap<String, ReviewTupleList>) infoVectors.get(1));
-                        //sort the recommendations by their xfactor score.
-                        Collections.sort(developerRecs);
-                        //write the recommendations to the output file
-                        for(Developer record : developerRecs)
-                            writer.print(record.mName + ":" + record.mXfactor + "\t" );
+                //write the recommendations to the output file
+                for (Reviewer key : curRecommendedReviewerRecs.keySet()) {
+                    if (!recommendedReviewerRecs.containsKey(key)) {
+                        recommendedReviewerRecs.put(key, 0.0);
                     }
-                    catch (Exception e)
-                    {
-                        System.out.print("Expert not found for path = " + queriedPath);
-                    }
-                    writer.println();
-                writer.println();
+                    recommendedReviewerRecs.put(key, recommendedReviewerRecs.get(key) + curRecommendedReviewerRecs.get(key));
+                }
+            } catch (Exception e) {
+                System.out.print("Expert not found for path = " + queriedPath);
             }
-            writer.close();
+            sb.append("\n\n");
         }
-        catch(Exception e)
-        {
-            System.err.println("Writing authors and xfactors to file:: " + e.getMessage());
-            e.printStackTrace();
+        List<RecommendedReviewer> result = new ArrayList();
+        for (Reviewer key : recommendedReviewerRecs.keySet()) {
+            result.add(new RecommendedReviewer(key, recommendedReviewerRecs.get(key)));
         }
+        return result;
     }
 
     //removing time from date for calculating dayFactor
-    public Date formatDate(Date date1) throws ParseException
-    {
+    public Date formatDate(Date date1) throws ParseException {
 
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
