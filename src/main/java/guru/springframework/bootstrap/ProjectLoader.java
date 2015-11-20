@@ -35,21 +35,21 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        Project mylynTask = new Project();
-        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
-        projectRepository.save(mylynTask);
-
-        Review review1 = new Review();
-        review1.setReviewId("I6cf37ca92c014db141d0b1e674568474b435ed02");
-        review1.setProject(mylynTask);
-        reviewRepository.save(review1);
-
-        log.info("Saved MyLynTask - id: " + mylynTask.getId());
-
-        Project cdt = new Project();
-        cdt.setName("cdt/org.eclipse.cdt").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
-        projectRepository.save(cdt);
-
-        log.info("Saved CDT - id:" + cdt.getId());
+//        Project mylynTask = new Project();
+//        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
+//        projectRepository.save(mylynTask);
+//
+//        Review review1 = new Review();
+//        review1.setReviewId("I6cf37ca92c014db141d0b1e674568474b435ed02");
+//        review1.setProject(mylynTask);
+//        reviewRepository.save(review1);
+//
+//        log.info("Saved MyLynTask - id: " + mylynTask.getId());
+//
+//        Project cdt = new Project();
+//        cdt.setName("cdt/org.eclipse.cdt").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
+//        projectRepository.save(cdt);
+//
+//        log.info("Saved CDT - id:" + cdt.getId());
     }
 }

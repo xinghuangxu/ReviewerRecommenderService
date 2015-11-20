@@ -39,6 +39,10 @@ public class Review implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", orphanRemoval = true)
     private List<Comment> comments;
 
+    public List<Comment> getComments(){
+        return comments;
+    }
+
     private String status;
 
     private Date updateDate;

@@ -6,6 +6,9 @@ import javax.persistence.*;
  * Created by xinghuangxu on 11/18/15.
  */
 @Entity
+@Table(indexes = {
+        @Index(columnList = "name", name = "filepath_name_index"),
+})
 public class FilePath {
 
     @Id
@@ -30,4 +33,8 @@ public class FilePath {
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="review_id")
     private Review review;
+
+    public Review getReview() {
+        return review;
+    }
 }

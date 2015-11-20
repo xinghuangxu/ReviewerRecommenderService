@@ -40,6 +40,10 @@ public class Comment {
     @JoinColumn(name = "reviewer_id")
     private Reviewer reviewer;
 
+    public Reviewer getReviewer(){
+        return reviewer;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;

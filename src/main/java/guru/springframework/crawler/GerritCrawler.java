@@ -22,7 +22,7 @@ import java.util.Set;
 public class GerritCrawler {
 
     private final int PAGE_SIZE = 1;
-    private final int MAX_NUM = 5;
+    private final int MAX_NUM = 20;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -105,7 +105,8 @@ public class GerritCrawler {
                 e.printStackTrace();
             }
             Reviewer reviewer = createReviewerIfNotExit(project, reviewComment.get(1));
-            Comment comment = new Comment(reviewComment.get(0), date, review, reviewer);
+            String message = reviewComment.get(0);
+            Comment comment = new Comment(message.substring(0,Math.min(message.length(),1000)), date, review, reviewer);
             commentRepository.save(comment);
         }
 

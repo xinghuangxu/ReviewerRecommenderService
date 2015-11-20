@@ -17,6 +17,8 @@ package guru.springframework.recommender.xfinder; /*
  
  */
 
+ import guru.springframework.domain.Reviewer;
+
  import java.util.Date;
 
 /*
@@ -29,10 +31,19 @@ public class ReviewTuple
 {
     //MEMBER VARIABLES
     //public Integer mBugID = 0;
-    public String mBugID ="";
-    public String mReviewer = "";
+    public String mBugID;
+    public Reviewer mReviewer;
     public Date mDate;
 
+    public ReviewTuple(){
+
+    }
+
+    public ReviewTuple(String mBugID, Reviewer mReviewer, Date mDate){
+        this.mBugID = mBugID;
+        this.mReviewer = mReviewer;
+        this.mDate = mDate;
+    }
     //Setters
     //public void setmBugID(Integer mBugID)
     public void setmBugID(String mBugID)
@@ -40,7 +51,7 @@ public class ReviewTuple
         this.mBugID=mBugID;
     }
 
-    public void setmReviewer(String mReviewer)
+    public void setmReviewer(Reviewer mReviewer)
     {
         this.mReviewer=mReviewer;
     }
