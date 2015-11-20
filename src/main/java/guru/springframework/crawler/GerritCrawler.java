@@ -22,6 +22,7 @@ import java.util.Set;
 public class GerritCrawler {
 
     private final int PAGE_SIZE = 1;
+    private final int MAX_NUM = 5;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -38,33 +39,52 @@ public class GerritCrawler {
     @Autowired
     private CommentRepository commentRepository;
 
+    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
 
     public void crawl(Project project) {
         Long ageInMin = calculateAgeInMin(project);
-        if (ageInMin != null && ageInMin < 30) {
+        if (ageInMin != null && ageInMin < 1) {
             return; //has just been updated
         }
         project.setLastModifiedDate(new Date());
         projectRepository.save(project);
 
         int skipCount = 0;
-        GerritReview gerritReview = fetchGerritReivew(project, ageInMin, skipCount);
+
         //start the crawling process
-        while (gerritReview.hasMoreChange()) {
+        int i = 0;
+        GerritReview gerritReview;
+        boolean halt = false;
+        while (!halt && i < MAX_NUM) {
             skipCount += PAGE_SIZE;
-            saveAsReview(project, gerritReview);
             gerritReview = fetchGerritReivew(project, ageInMin, skipCount);
+            halt = saveAsReview(project, gerritReview);
+            i++;
         }
     }
 
-    private void saveAsReview(Project project, GerritReview gerritReview) {
+    private boolean saveAsReview(Project project, GerritReview gerritReview) {
         Review review = reviewRepository.findOne(gerritReview.getId());
+        Date updateDate;
+        try {
+            updateDate = formatter.parse(gerritReview.getDateUpdated());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return !gerritReview.hasMoreChange();
+        }
         if (review != null) { //delete if already exist
+            if (review.getUpdateDate().compareTo(updateDate) == 0) {
+                return true;
+            }
             reviewRepository.delete(review.getReviewId());
         }
         review = new Review();
         review.setReviewId(gerritReview.getId());
+        review.setUpdateDate(updateDate);
         review.setProject(project);
+        review.setStatus(gerritReview.getStatus());
+
 
         //add reviewers to the db
         Map<String, String> reviewersMap = gerritReview.ReviewerAssignee();
@@ -76,7 +96,7 @@ public class GerritCrawler {
         reviewRepository.save(review);
 
         List<List<String>> reviewMessages = gerritReview.reviewMessageExtractor();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
         for (List<String> reviewComment : reviewMessages) {
             Date date = null;
             try {
@@ -94,7 +114,7 @@ public class GerritCrawler {
         for (String filePath : fileVectors) {
             filePathRepository.save(new FilePath(filePath, review));
         }
-
+        return !gerritReview.hasMoreChange();
     }
 
     private Reviewer createReviewerIfNotExit(Project project, String accountId) {

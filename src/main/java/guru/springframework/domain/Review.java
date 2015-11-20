@@ -3,6 +3,7 @@ package guru.springframework.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class Review implements Serializable {
     private String reviewId;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(name = "review_reviewer", joinColumns = {
             @JoinColumn(name = "Review_ID", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "Reviewer_ID",
@@ -38,6 +39,23 @@ public class Review implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", orphanRemoval = true)
     private List<Comment> comments;
 
+    private String status;
+
+    private Date updateDate;
+
+    public Review setUpdateDate(Date date){
+        this.updateDate = date;
+        return this;
+    }
+
+    public Date getUpdateDate(){
+        return updateDate;
+    }
+
+    public Review setStatus(String status){
+        this.status = status;
+        return this;
+    }
 
     public Set<Reviewer> getReviewers() {
         return this.reviewers;

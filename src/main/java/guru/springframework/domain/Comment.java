@@ -13,6 +13,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(length=1025)
     private String message;
     private Date date;
 

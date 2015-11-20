@@ -19,7 +19,7 @@ public class Reviewer {
 
     private String username;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "reviewers")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "reviewers", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<Review> reviews = new HashSet<>(0);
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewer", orphanRemoval = true)

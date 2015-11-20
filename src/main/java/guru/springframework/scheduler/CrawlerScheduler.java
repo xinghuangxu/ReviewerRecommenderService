@@ -14,7 +14,8 @@ public class CrawlerScheduler {
     @Autowired
     private Crawler crawler;
 
-    @Scheduled(fixedRate = 50000)
+    //500 seconds
+    @Scheduled(fixedRate = 500000)
     public void reportCurrentTime() {
         crawler.updateKnowledgeBase();
     }
