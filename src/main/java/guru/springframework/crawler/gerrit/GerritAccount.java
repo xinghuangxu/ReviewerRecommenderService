@@ -43,7 +43,7 @@ public class GerritAccount {
     //CONSTRUCTOR
     public GerritAccount(String url) throws JSONException {
         GerritHttpRequest obj = new GerritHttpRequest(url);
-        reviewDataObject = obj.getjson();
+        reviewDataObject = obj.getJsonObject();
         this.accountId = reviewDataObject.getLong("_account_id")+"";
         this.name = reviewDataObject.getString("name");
         this.username = reviewDataObject.getString("username");

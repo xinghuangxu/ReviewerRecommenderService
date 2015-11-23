@@ -9,6 +9,9 @@ import java.util.Set;
  * Created by xinghuangxu on 11/18/15.
  */
 @Entity
+@Table(indexes = {
+        @Index(columnList = "name", name = "project_name_index"),
+})
 public class Project {
 
     public enum Type {

@@ -1,0 +1,24 @@
+https://reviews.apache.org/api/review-requests/39456/diffs/2/files/1102641/
+
+
+https://reviews.apache.org/api/review-requests/40098/
+https://reviews.apache.org/api/review-requests/40253/
+
+filter based on repository id
+https://reviews.apache.org/api/review-requests/?repository=130
+Can also use the last-updated-from parameter
+
+https://reviews.apache.org/api/repositories/130/
+This has the name of the repository
+
+
+https://reviews.apache.org/api/review-requests/40098/reviews/
+This will give all the reviews
+
+Where to find all the paths?
+
+https://reviews.apache.org/api/review-requests/40253/diffs
+This will give all the revision numbers
+
+https://reviews.apache.org/api/review-requests/40253/diffs/2/files/
+this will give the file path

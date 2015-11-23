@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class GerritHttpRequest {
     //MEMBER VARIABLES
-    public JSONArray reviewDataArray = new JSONArray();
+    public JSONArray reviewDataArray=new JSONArray();
     public JSONObject reviewDataObject=new JSONObject();
     //CONSTRUCTORS
     public GerritHttpRequest(String url) throws JSONException
@@ -46,16 +46,16 @@ public class GerritHttpRequest {
                 {
                     //declare JSONArray from response
                     reviewDataArray=new JSONArray(response);
-                    if(reviewDataArray.length()>1)
-                    {
-                        //declare JSONObject from reviewDataArray
-                        reviewDataObject=reviewDataArray.getJSONObject(1);
-                    }
-                    else
-                    {
-                        //declare JSONObject from reviewDataArray
-                        reviewDataObject=reviewDataArray.getJSONObject(0);
-                    }
+//                    if(reviewDataArray.length()>1)
+//                    {
+//                        //declare JSONObject from reviewDataArray
+//                        reviewDataObject=reviewDataArray.getJSONObject(1);
+//                    }
+//                    else
+//                    {
+//                        //declare JSONObject from reviewDataArray
+//                        reviewDataObject=reviewDataArray.getJSONObject(0);
+//                    }
 
                 }
                 //response from this url:""https://git.eclipse.org/r/changes/"+entry.getKey()+"/revisions/"+value+"/comments"
@@ -78,7 +78,13 @@ public class GerritHttpRequest {
 
     }
     //GET Method
-    public JSONObject getjson()
+    public JSONArray getJsonArray()
+    {
+        return reviewDataArray;
+    }
+
+    //GET Method
+    public JSONObject getJsonObject()
     {
         return reviewDataObject;
     }

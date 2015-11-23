@@ -13,4 +13,5 @@ public interface FilePathRepository extends CrudRepository<FilePath, Integer> {
     List<FilePath> findByName(String name);
 
     List<FilePath> findByNameEndingWith(String name);
+
 }

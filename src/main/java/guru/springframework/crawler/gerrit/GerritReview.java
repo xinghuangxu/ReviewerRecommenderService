@@ -13,6 +13,8 @@ import java.util.List;
  * Created by xinghuangxu on 11/18/15.
  */
 public class GerritReview {
+    private final String MORE_CHANGES_KEY = "_more_changes";
+
 
     //CONSTANTS
     //final private String url="https://git.eclipse.org/r/changes/?q=mylyn&o=ALL_REVISIONS&o=ALL_FILES&o=MESSAGES&n=1&N=002eaaa400006c6f";
@@ -26,9 +28,8 @@ public class GerritReview {
 
     //CONSTRUCTOR
 
-    public GerritReview(String url) throws JSONException {
-        GerritHttpRequest obj = new GerritHttpRequest(url);
-        reviewDataObject = obj.getjson();
+    public GerritReview(JSONObject reviewDataObject) throws JSONException {
+        this.reviewDataObject = reviewDataObject;
     }
 
     //This Method returns an HashMap includes all of unique files which are reviewed in the patch set
@@ -184,8 +185,11 @@ public class GerritReview {
 
     //return more_changes flag of codeReview
     public Boolean hasMoreChange() throws JSONException {
-        Boolean more_changes = reviewDataObject.has("_more_changes");
-        return more_changes;
+        Boolean more_changes = reviewDataObject.has(MORE_CHANGES_KEY);
+        if(more_changes){
+            return reviewDataObject.getBoolean(MORE_CHANGES_KEY);
+        }
+        return true;
     }
 
     public ArrayList<String> getRevision() {

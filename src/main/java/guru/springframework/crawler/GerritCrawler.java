@@ -2,6 +2,7 @@ package guru.springframework.crawler;
 
 import guru.springframework.crawler.gerrit.GerritAccount;
 import guru.springframework.crawler.gerrit.GerritReview;
+import guru.springframework.crawler.gerrit.GerritReviewList;
 import guru.springframework.domain.*;
 import guru.springframework.repositories.*;
 import org.json.JSONException;
@@ -10,10 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by xinghuangxu on 11/18/15.
@@ -21,8 +19,8 @@ import java.util.Set;
 @Component
 public class GerritCrawler {
 
-    private final int PAGE_SIZE = 1;
-    private final int MAX_NUM = 20;
+    private final int PAGE_SIZE = 10;
+    private final int MAX_NUM = 200;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -50,16 +48,22 @@ public class GerritCrawler {
         project.setLastModifiedDate(new Date());
         projectRepository.save(project);
 
-        int skipCount = 0;
-
         //start the crawling process
         int i = 0;
-        GerritReview gerritReview;
+        GerritReviewList gerritReviewList;
         boolean halt = false;
         while (!halt && i < MAX_NUM) {
-            skipCount += PAGE_SIZE;
-            gerritReview = fetchGerritReivew(project, ageInMin, skipCount);
-            halt = saveAsReview(project, gerritReview);
+            gerritReviewList = fetchGerritReivew(project, ageInMin, i * PAGE_SIZE);
+            for (int j = 0; j < gerritReviewList.length(); j++) {
+                if (saveAsReview(project, gerritReviewList.get(j))) {
+                    return;
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             i++;
         }
     }
@@ -106,14 +110,18 @@ public class GerritCrawler {
             }
             Reviewer reviewer = createReviewerIfNotExit(project, reviewComment.get(1));
             String message = reviewComment.get(0);
-            Comment comment = new Comment(message.substring(0,Math.min(message.length(),1000)), date, review, reviewer);
+            Comment comment = new Comment(message.substring(0, Math.min(message.length(), 1000)), date, review, reviewer);
             commentRepository.save(comment);
         }
 
         //add file path
+        Set<String> filePathSet = new HashSet<String>();
         List<String> fileVectors = gerritReview.reviewPatchFiles();
         for (String filePath : fileVectors) {
-            filePathRepository.save(new FilePath(filePath, review));
+            if (!filePathSet.contains(filePath)) {
+                filePathSet.add(filePath);
+                filePathRepository.save(new FilePath(filePath, review));
+            }
         }
         return !gerritReview.hasMoreChange();
     }
@@ -135,9 +143,9 @@ public class GerritCrawler {
         return new GerritAccount(url);
     }
 
-    public GerritReview fetchGerritReivew(Project project, Long ageInMin, Integer skipCount) throws JSONException {    //String url="https://git.eclipse.org/r/changes/?q=mylyn&o=ALL_REVISIONS&o=ALL_FILES&o=MESSAGES&n=2&N="+skipCount+"\"";
+    public GerritReviewList fetchGerritReivew(Project project, Long ageInMin, Integer skipCount) throws JSONException {    //String url="https://git.eclipse.org/r/changes/?q=mylyn&o=ALL_REVISIONS&o=ALL_FILES&o=MESSAGES&n=2&N="+skipCount+"\"";
         String url = getCrawlingUrl(project, ageInMin, skipCount);
-        return new GerritReview(url);
+        return new GerritReviewList(url);
     }
 
 

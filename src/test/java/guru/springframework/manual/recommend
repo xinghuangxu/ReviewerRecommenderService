@@ -1,0 +1,7 @@
+http://localhost:8080/recommend
+
+POST
+
+Content-Type: application/json
+
+{"projectId":1,"creationDate":"2014-11-17 22:22:54","filePaths":["org.eclipse.mylyn.tasks.core/src/org/eclipse/mylyn/tasks/core/data/TaskAttributeMapper.java","org.eclipse.mylyn.tasks.tests/src/org/eclipse/mylyn/tasks/tests/data/TaskAttributeMapperTest.java"]}

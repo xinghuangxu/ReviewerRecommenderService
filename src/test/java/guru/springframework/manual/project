@@ -1,0 +1,7 @@
+http://localhost:8080/projects
+
+POST
+
+Content-Type: application/json
+
+{ "name":"mylyn/org.eclipse.mylyn.tasks","type":"Gerrit","url":"https://git.eclipse.org/"}

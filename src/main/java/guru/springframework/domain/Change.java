@@ -9,26 +9,29 @@ import java.util.List;
  */
 public class Change implements Serializable {
 
-    private String projectName;
+    private Integer projectId;
+    private String creationDate;
     private List<String> filePaths= new ArrayList<>();
 
-    public String getProjectName(){
-        return projectName;
+    public Integer getProjectId(){
+        return projectId;
     }
 
     public List<String> getFilePaths(){
         return filePaths;
     }
 
-    public void setProjectName(String projectName){
-        this.projectName = projectName;
-    }
+    public String getCreationDate(){return creationDate;}
 
     public void setFilePaths(List<String> filePaths){
         this.filePaths = filePaths;
     }
 
-    public void addFilePath(String filePath){
-        filePaths.add(filePath);
+    public void setCreationDate(String creationDate){
+        this.creationDate = creationDate;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }

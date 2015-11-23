@@ -247,6 +247,7 @@ public class XFinder {
         for (Reviewer key : recommendedReviewerRecs.keySet()) {
             result.add(new RecommendedReviewer(key, recommendedReviewerRecs.get(key)));
         }
+        Collections.sort(result);
         return result;
     }
 

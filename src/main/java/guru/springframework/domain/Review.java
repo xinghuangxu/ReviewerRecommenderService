@@ -33,6 +33,10 @@ public class Review implements Serializable {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    public Project getProject(){
+        return project;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", orphanRemoval = true)
     private List<FilePath> filePaths;
 
