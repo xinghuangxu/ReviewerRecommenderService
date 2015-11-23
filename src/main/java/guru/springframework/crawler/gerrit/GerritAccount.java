@@ -1,13 +1,7 @@
 package guru.springframework.crawler.gerrit;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by xinghuangxu on 11/18/15.

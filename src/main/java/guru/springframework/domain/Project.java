@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(indexes = {
         @Index(columnList = "name", name = "project_name_index"),
+        @Index(columnList = "externalId", name = "project_external_id_index")
 })
 public class Project {
 
@@ -22,6 +23,17 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    private String externalId;
+
+    public Project setExternalId(String externalId){
+        this.externalId = externalId;
+        return this;
+    }
+
+    public String getExternalId(){
+        return externalId;
+    }
 
     @Column(unique = true)
     private String name;

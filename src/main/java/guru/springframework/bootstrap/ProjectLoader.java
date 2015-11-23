@@ -1,5 +1,7 @@
 package guru.springframework.bootstrap;
 
+import guru.springframework.crawler.reviewboard.RbFactory;
+import guru.springframework.crawler.reviewboard.RbRepository;
 import guru.springframework.domain.Project;
 import guru.springframework.domain.Review;
 import guru.springframework.repositories.ProjectRepository;
@@ -35,6 +37,8 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
+        //Load Gerrit Sample Projects
+
 //        Project mylynTask = new Project();
 //        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
 //        projectRepository.save(mylynTask);
@@ -51,5 +55,15 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
 //        projectRepository.save(cdt);
 //
 //        log.info("Saved CDT - id:" + cdt.getId());
+
+        //Load Rb Sample Projects
+        String siteUrl = "https://reviews.apache.org/";
+        String mesosProjectName = "mesos";
+        Project mesos = new Project();
+        mesos.setName(mesosProjectName).setType(Project.Type.Reviewboard).setUrl(siteUrl);
+        RbFactory rbFactory = new RbFactory(siteUrl);
+        RbRepository rbRepository = rbFactory.findRepositoryWithName(mesosProjectName);
+        mesos.setExternalId(rbRepository.getId());
+        projectRepository.save(mesos);
     }
 }

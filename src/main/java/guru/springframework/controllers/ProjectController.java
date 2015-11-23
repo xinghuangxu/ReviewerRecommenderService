@@ -1,16 +1,11 @@
 package guru.springframework.controllers;
 
-import guru.springframework.crawler.GerritCrawler;
+import guru.springframework.crawler.gerrit.GerritCrawler;
 import guru.springframework.domain.*;
-import guru.springframework.recommender.xfinder.RecommendedReviewer;
-import guru.springframework.recommender.xfinder.ReviewTuple;
-import guru.springframework.recommender.xfinder.XFinder;
-import guru.springframework.repositories.FilePathRepository;
 import guru.springframework.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**

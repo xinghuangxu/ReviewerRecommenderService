@@ -1,4 +1,4 @@
-package guru.springframework.crawler;
+package guru.springframework.crawler.gerrit;
 
 import guru.springframework.crawler.gerrit.GerritAccount;
 import guru.springframework.crawler.gerrit.GerritReview;
