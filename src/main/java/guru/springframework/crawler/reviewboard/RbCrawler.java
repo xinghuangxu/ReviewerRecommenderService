@@ -1,10 +1,7 @@
 package guru.springframework.crawler.reviewboard;
 
-import guru.springframework.crawler.gerrit.GerritAccount;
-import guru.springframework.crawler.gerrit.GerritReviewList;
 import guru.springframework.domain.*;
 import guru.springframework.repositories.*;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,11 +39,15 @@ public class RbCrawler {
     public void crawl(Project project) {
         int i = 0;
         RbFactory rbFactory = new RbFactory(project.getUrl());
-        RbReviewList rbReviewList = rbFactory.findReviewsWithRepositoryId(project.getExternalId());
+        RbReviewList rbReviewList = rbFactory.findReviewsWithProject(project);
+        Date latestUpdatedDate = null;
         while (rbReviewList != null & i < MAX_NUM) {
             for (int j = 0; j < rbReviewList.getLength(); j++) {
                 RbReviewRequest rbReviewRequest = rbReviewList.getReview(j);
-                saveAsReview(project, rbReviewRequest);
+                Date lastUpdated = saveAsReview(project, rbReviewRequest);
+                if(latestUpdatedDate==null||latestUpdatedDate.before(lastUpdated)){
+                    latestUpdatedDate = lastUpdated;
+                }
             }
             rbReviewList = rbFactory.findReviewsWithUrl(rbReviewList.next());
             try {
@@ -57,19 +58,23 @@ public class RbCrawler {
             i++;
         }
 
-        project.setLastModifiedDate(new Date());
+        project.setLastModifiedDate(latestUpdatedDate);
         projectRepository.save(project);
     }
 
-    private void saveAsReview(Project project, RbReviewRequest rbReviewRequest) {
+    private Date saveAsReview(Project project, RbReviewRequest rbReviewRequest) {
         String reviewId = project.getUrl() + rbReviewRequest.getId();
         Review review = reviewRepository.findOne(reviewId);
+        Date lastUpdated = rbReviewRequest.getLastUpdated();
         if (review != null) { //delete if already exist
+            if(review.getUpdateDate().compareTo(lastUpdated)==0){
+                return lastUpdated;
+            }
             reviewRepository.delete(review.getReviewId());
         }
         review = new Review();
         review.setReviewId(reviewId);
-        review.setUpdateDate(rbReviewRequest.getLastUpdated());
+        review.setUpdateDate(lastUpdated);
         review.setProject(project);
         review.setStatus(rbReviewRequest.getStatus());
         reviewRepository.save(review);
@@ -104,6 +109,7 @@ public class RbCrawler {
                 }
             }
         }
+        return lastUpdated;
     }
 
     private Reviewer createReviewerIfNotExit(RbReviewer rbReviewer) {

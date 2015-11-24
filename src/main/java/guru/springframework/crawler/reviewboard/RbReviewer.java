@@ -1,14 +1,14 @@
 package guru.springframework.crawler.reviewboard;
 
+import guru.springframework.crawler.JsonObjectWrapper;
 import org.json.JSONObject;
 
 /**
  * Created by xinghuangxu on 11/23/15.
  */
-public class RbReviewer {
+public class RbReviewer extends JsonObjectWrapper {
 
     private String id;
-    private JSONObject jsonObject;
 
     public RbReviewer(JSONObject user) {
         this.id = user.getString("href");
@@ -16,7 +16,11 @@ public class RbReviewer {
 
     public void getDetail() {
         RbHttpRequest rbHttpRequest = new RbHttpRequest(this.id);
-        jsonObject = rbHttpRequest.getJsonObject().getJSONObject("user");
+        if(rbHttpRequest.getJsonObject().has("user")){
+            jsonObject = rbHttpRequest.getJsonObject().getJSONObject("user");
+        }else{
+            System.out.print("User not found!");
+        }
     }
 
     public String getId() {
@@ -24,14 +28,14 @@ public class RbReviewer {
     }
 
     public String getFullName() {
-        return jsonObject.getString("fullname");
+        return getString("fullname");
     }
 
     public String getEmail() {
-        return jsonObject.getString("email");
+        return getString("email");
     }
 
     public String getUsername() {
-        return jsonObject.getString("username");
+        return getString("username");
     }
 }

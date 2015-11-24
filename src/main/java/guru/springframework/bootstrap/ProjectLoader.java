@@ -57,13 +57,13 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
 //        log.info("Saved CDT - id:" + cdt.getId());
 
         //Load Rb Sample Projects
-        String siteUrl = "https://reviews.apache.org/";
-        String mesosProjectName = "mesos";
-        Project mesos = new Project();
-        mesos.setName(mesosProjectName).setType(Project.Type.Reviewboard).setUrl(siteUrl);
-        RbFactory rbFactory = new RbFactory(siteUrl);
-        RbRepository rbRepository = rbFactory.findRepositoryWithName(mesosProjectName);
-        mesos.setExternalId(rbRepository.getId());
-        projectRepository.save(mesos);
+//        String siteUrl = "https://reviews.apache.org/";
+//        String mesosProjectName = "mesos";
+//        Project mesos = new Project();
+//        mesos.setName(mesosProjectName).setType(Project.Type.Reviewboard).setUrl(siteUrl);
+//        RbFactory rbFactory = new RbFactory(siteUrl);
+//        RbRepository rbRepository = rbFactory.findRepositoryWithName(mesosProjectName);
+//        mesos.setExternalId(rbRepository.getId());
+//        projectRepository.save(mesos);
     }
 }

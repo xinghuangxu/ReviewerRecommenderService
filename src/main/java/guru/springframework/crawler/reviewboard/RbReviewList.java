@@ -27,10 +27,10 @@ public class RbReviewList {
 
     public String next(){
         JSONObject links = jsonObject.getJSONObject("links");
-        JSONObject next = links.getJSONObject("next");
-        if(next == null){
-            return null;
+        if(links.has("next")){
+            JSONObject next = links.getJSONObject("next");
+            return next.getString("href");
         }
-        return next.getString("href");
+        return null;
     }
 }
