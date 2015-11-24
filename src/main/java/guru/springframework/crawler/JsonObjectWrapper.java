@@ -10,7 +10,7 @@ public class JsonObjectWrapper {
     protected JSONObject jsonObject;
 
     protected String getString(String name) {
-        if(jsonObject.has(name)){
+        if (jsonObject != null && jsonObject.has(name)) {
             return jsonObject.getString(name);
         }
         return "";
