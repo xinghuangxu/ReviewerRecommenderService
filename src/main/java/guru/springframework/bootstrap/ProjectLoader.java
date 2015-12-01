@@ -37,11 +37,11 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        //Load Gerrit Sample Projects
+//        Load Gerrit Sample Projects
 
-//        Project mylynTask = new Project();
-//        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
-//        projectRepository.save(mylynTask);
+        Project mylynTask = new Project();
+        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
+        projectRepository.save(mylynTask);
 //
 //        Review review1 = new Review();
 //        review1.setReviewId("I6cf37ca92c014db141d0b1e674568474b435ed02");
@@ -55,8 +55,8 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
 //        projectRepository.save(cdt);
 //
 //        log.info("Saved CDT - id:" + cdt.getId());
-
-        //Load Rb Sample Projects
+//
+////        Load Rb Sample Projects
 //        String siteUrl = "https://reviews.apache.org/";
 //        String mesosProjectName = "mesos";
 //        Project mesos = new Project();
