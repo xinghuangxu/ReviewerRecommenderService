@@ -39,9 +39,9 @@ public class ProjectLoader implements ApplicationListener<ContextRefreshedEvent>
 
 //        Load Gerrit Sample Projects
 
-        Project mylynTask = new Project();
-        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
-        projectRepository.save(mylynTask);
+//        Project mylynTask = new Project();
+//        mylynTask.setName("mylyn/org.eclipse.mylyn.tasks").setType(Project.Type.Gerrit).setUrl("https://git.eclipse.org/");
+//        projectRepository.save(mylynTask);
 //
 //        Review review1 = new Review();
 //        review1.setReviewId("I6cf37ca92c014db141d0b1e674568474b435ed02");

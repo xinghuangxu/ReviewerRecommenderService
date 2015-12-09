@@ -1,1 +1,188 @@
-[{"score":13.553721769689918,"name":"Mesos ReviewBot","email":"reviews@mesos.apache.org","username":"mesos-review"},{"score":5.305962938318704,"name":"Vinod Kone","email":"vinodkone@gmail.com","username":"vinodkone"},{"score":4.829691324795883,"name":"Michael Park","email":"mcypark@gmail.com","username":"mcypark"},{"score":3.289905053956947,"name":"Jie Yu","email":"yujie.jay@gmail.com","username":"jieyu"},{"score":2.7729664678825463,"name":"Adam B","email":"adam@mesosphere.io","username":"adam-mesos"},{"score":2.6979740764947944,"name":"Niklas Nielsen","email":"nik@qni.dk","username":"nnielsen"},{"score":2.6268415307970874,"name":"Till Toenshoff","email":"toenshoff@me.com","username":"tillt"},{"score":2.268583745075703,"name":"Ben Mahler","email":"benjamin.mahler@gmail.com","username":"bmahler"},{"score":1.891541213443759,"name":"Alexander Rukletsov","email":"rukletsov@gmail.com","username":"alex-mesos"},{"score":1.7801670830487963,"name":"","email":"","username":"dhamon"},{"score":1.2790441903608674,"name":"Alexander Rojas","email":"alexander@mesosphere.io","username":"arojas"},{"score":1.038765950573413,"name":"Isabel Jimenez","email":"contact@isabeljimenez.com","username":"ijimenez"},{"score":1.0057076750361005,"name":"Kapil Arya","email":"kapil@mesosphere.io","username":"karya"},{"score":0.8927787145946173,"name":"Timothy Chen","email":"tnachen@apache.org","username":"tnachen"},{"score":0.5744674463856325,"name":"Benjamin Hindman","email":"benh@berkeley.edu","username":"benjaminhindman"},{"score":0.4584911993839251,"name":"Joerg Schad","email":"joerg@mesosphere.io","username":"joerg84"},{"score":0.19442399267999316,"name":"Cody Maloney","email":"cody@mesosphere.io","username":"cmaloney"},{"score":0.14804752540972352,"name":"Joris Van Remoortere","email":"joris.van.remoortere@gmail.com","username":"jvanremoortere"},{"score":0.13628148149497896,"name":"Maxim Khutornenko","email":"maxim@apache.org","username":"maxim"},{"score":0.09978713584803724,"name":"Bill Farner","email":"wfarner@apache.org","username":"wfarner"},{"score":0.09446360445081925,"name":"David Robinson","email":"drobinson@twopensource.com","username":"drobinson"},{"score":0.08598679966789873,"name":"Evelina Dumitrescu","email":"evelina.a.dumitrescu@gmail.com","username":"evelinad"},{"score":0.07490371315176067,"name":"Bernd Mathiske","email":"bernd@mesosphere.io","username":"bernd-mesos"},{"score":0.06101433815560329,"name":"Jiang Yan Xu","email":"yan@jxu.me","username":"xujyan"},{"score":0.05438843391344142,"name":"Sunil Abraham","email":"s.abraham@gmail.com","username":"sabraham"},{"score":0.031878891517652795,"name":"Ross Allen","email":"ross+archive@mesosphere.io","username":"ssorallen"},{"score":0.026809433085030678,"name":"Yifan Gu","email":"myanata@msn.com","username":"yifan"},{"score":0.02668666743166834,"name":"Ian Downes","email":"ian.downes@gmail.com","username":"idownes"},{"score":0.026498874004438296,"name":"Tom Arnfeld","email":"tarnfeld@me.com","username":"tarnfeld"},{"score":0.02388222237274712,"name":"Nikita Vetoshkin","email":"nikita.vetoshkin@gmail.com","username":"nekto0n"},{"score":0.01607001996200779,"name":"Michael Lunøe","email":"michael.lunoe@gmail.com","username":"mlunoe"}]
+[
+  {
+    "score": 13.553721769689918,
+    "name": "Mesos ReviewBot",
+    "email": "reviews@mesos.apache.org",
+    "username": "mesos-review"
+  },
+  {
+    "score": 5.305962938318704,
+    "name": "Vinod Kone",
+    "email": "vinodkone@gmail.com",
+    "username": "vinodkone"
+  },
+  {
+    "score": 4.829691324795883,
+    "name": "Michael Park",
+    "email": "mcypark@gmail.com",
+    "username": "mcypark"
+  },
+  {
+    "score": 3.289905053956947,
+    "name": "Jie Yu",
+    "email": "yujie.jay@gmail.com",
+    "username": "jieyu"
+  },
+  {
+    "score": 2.7729664678825463,
+    "name": "Adam B",
+    "email": "adam@mesosphere.io",
+    "username": "adam-mesos"
+  },
+  {
+    "score": 2.6979740764947944,
+    "name": "Niklas Nielsen",
+    "email": "nik@qni.dk",
+    "username": "nnielsen"
+  },
+  {
+    "score": 2.6268415307970874,
+    "name": "Till Toenshoff",
+    "email": "toenshoff@me.com",
+    "username": "tillt"
+  },
+  {
+    "score": 2.268583745075703,
+    "name": "Ben Mahler",
+    "email": "benjamin.mahler@gmail.com",
+    "username": "bmahler"
+  },
+  {
+    "score": 1.891541213443759,
+    "name": "Alexander Rukletsov",
+    "email": "rukletsov@gmail.com",
+    "username": "alex-mesos"
+  },
+  {
+    "score": 1.7801670830487963,
+    "name": "",
+    "email": "",
+    "username": "dhamon"
+  },
+  {
+    "score": 1.2790441903608674,
+    "name": "Alexander Rojas",
+    "email": "alexander@mesosphere.io",
+    "username": "arojas"
+  },
+  {
+    "score": 1.038765950573413,
+    "name": "Isabel Jimenez",
+    "email": "contact@isabeljimenez.com",
+    "username": "ijimenez"
+  },
+  {
+    "score": 1.0057076750361005,
+    "name": "Kapil Arya",
+    "email": "kapil@mesosphere.io",
+    "username": "karya"
+  },
+  {
+    "score": 0.8927787145946173,
+    "name": "Timothy Chen",
+    "email": "tnachen@apache.org",
+    "username": "tnachen"
+  },
+  {
+    "score": 0.5744674463856325,
+    "name": "Benjamin Hindman",
+    "email": "benh@berkeley.edu",
+    "username": "benjaminhindman"
+  },
+  {
+    "score": 0.4584911993839251,
+    "name": "Joerg Schad",
+    "email": "joerg@mesosphere.io",
+    "username": "joerg84"
+  },
+  {
+    "score": 0.19442399267999316,
+    "name": "Cody Maloney",
+    "email": "cody@mesosphere.io",
+    "username": "cmaloney"
+  },
+  {
+    "score": 0.14804752540972352,
+    "name": "Joris Van Remoortere",
+    "email": "joris.van.remoortere@gmail.com",
+    "username": "jvanremoortere"
+  },
+  {
+    "score": 0.13628148149497896,
+    "name": "Maxim Khutornenko",
+    "email": "maxim@apache.org",
+    "username": "maxim"
+  },
+  {
+    "score": 0.09978713584803724,
+    "name": "Bill Farner",
+    "email": "wfarner@apache.org",
+    "username": "wfarner"
+  },
+  {
+    "score": 0.09446360445081925,
+    "name": "David Robinson",
+    "email": "drobinson@twopensource.com",
+    "username": "drobinson"
+  },
+  {
+    "score": 0.08598679966789873,
+    "name": "Evelina Dumitrescu",
+    "email": "evelina.a.dumitrescu@gmail.com",
+    "username": "evelinad"
+  },
+  {
+    "score": 0.07490371315176067,
+    "name": "Bernd Mathiske",
+    "email": "bernd@mesosphere.io",
+    "username": "bernd-mesos"
+  },
+  {
+    "score": 0.06101433815560329,
+    "name": "Jiang Yan Xu",
+    "email": "yan@jxu.me",
+    "username": "xujyan"
+  },
+  {
+    "score": 0.05438843391344142,
+    "name": "Sunil Abraham",
+    "email": "s.abraham@gmail.com",
+    "username": "sabraham"
+  },
+  {
+    "score": 0.031878891517652795,
+    "name": "Ross Allen",
+    "email": "ross+archive@mesosphere.io",
+    "username": "ssorallen"
+  },
+  {
+    "score": 0.026809433085030678,
+    "name": "Yifan Gu",
+    "email": "myanata@msn.com",
+    "username": "yifan"
+  },
+  {
+    "score": 0.02668666743166834,
+    "name": "Ian Downes",
+    "email": "ian.downes@gmail.com",
+    "username": "idownes"
+  },
+  {
+    "score": 0.026498874004438296,
+    "name": "Tom Arnfeld",
+    "email": "tarnfeld@me.com",
+    "username": "tarnfeld"
+  },
+  {
+    "score": 0.02388222237274712,
+    "name": "Nikita Vetoshkin",
+    "email": "nikita.vetoshkin@gmail.com",
+    "username": "nekto0n"
+  },
+  {
+    "score": 0.01607001996200779,
+    "name": "Michael Lunøe",
+    "email": "michael.lunoe@gmail.com",
+    "username": "mlunoe"
+  }
+]
