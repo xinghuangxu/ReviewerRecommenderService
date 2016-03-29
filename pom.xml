@@ -5,8 +5,8 @@
 
 	<groupId>xinghuangxu.codereview</groupId>
 	<artifactId>reviewer-recommendation-service</artifactId>
+	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 
 	<name>C2R</name>
 	<description>Code Reviewer Recommendation Service Framework</description>
@@ -22,6 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
+
 
 	<dependencies>
 		<dependency>
