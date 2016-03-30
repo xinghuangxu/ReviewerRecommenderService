@@ -39,6 +39,8 @@ public class ReviewRepositoryTest {
         user2.setReviewerId("user2").setName("jordan").setUsername("Jordan Hsu").setEmail("jordan@gmail.com");
         reviewerSet.add(user1);
         reviewerSet.add(user2);
+        reviewerRepository.save(user1);
+        reviewerRepository.save(user2);
         reviewRepository.save(review1);
 
         Review expectedReview = reviewRepository.findOne(review1.getReviewId());
